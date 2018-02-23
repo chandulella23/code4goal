@@ -1,0 +1,21 @@
+module.exports.obj={
+    details:{
+      name:{
+        firstName:null,
+        lastName:null
+      },
+      gender:null,
+      dob:null,
+      email:null,
+      mobile:null,
+      address:null,
+    },
+      project:null,
+      technicalSkills:null,
+      skills:null,
+      professionalExperience:null,
+      careerObjective:null,
+      academicQualifications:null,
+      languages:null
+
+ }
