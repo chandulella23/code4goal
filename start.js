@@ -66,12 +66,7 @@ function check(file,res){
 
       //console.log(h1Arr);
       logic.logic(strongArr,arr,h1Arr,html,data);
-      //textRact.textRact(file,res);
-      setTimeout(function(){
-
-        res.send(words); }, 3000);
-
-      
+      textRact.textRact(file,res);
       html=null;
       data=null;
       strongArr=null;
