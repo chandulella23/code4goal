@@ -37,7 +37,7 @@ function check(res){
 
       var html = result.value; // The generated HTML
       html=html.replace(/(<p>)?\n*\s*<img[\n*|\s*]+.*\/>\s*[a-z\s]+\s*\n*(<\/p>)?/gm,"").replace(/^(\s*<p>)\n*\s*(Page\s*\d*)(\n*\s*<\/p>)|^\s*<a\s*id="page[\d*]">/gm,"");
-      html=html.replace(/\s*<a[\n*|\s*].*(\/)?>\s*\n*.*\s*\n*<\/a>/gmi,"")
+    //  html=html.replace(/\s*<a[\n*|\s*].*(\/)?>\s*\n*.*\s*\n*<\/a>/gmi,"")
       console.log(html);
       var messages = result.messages; // Any messages, such as warnings during conversion
       var data=htmlBeautify(html).toString();

@@ -150,14 +150,14 @@ module.exports.execu=function(addSkill,addSkillextra,addCareer,addLang,addProjec
 
                   var str_1=h_i.join('\n').trim();
                   console.log(matches5);
-                     console.log("111111111111111",str_1);
-                  str_1=str_1.replace(/`^\s*${matches5}`/gm,'');
-
-                  console.log("00000000000000000000000000",str_1);
-                  // str_1=str_1.replace(/\s+|\n+|\t/g, '\\n*\\s*').replace(/\(/gm,'\\(').replace(/\)/gm,'\\)')
-                  //  k_re1 = new RegExp(str_1,'gm');
-                  // str=str.replace(/`${k_re1}`/gm,'');
-                  console.log("after replace",str);
+                  //    console.log("111111111111111",str_1);
+                  // str_1=str_1.replace(/`^\s*${matches5}`/gm,'');
+                  //
+                  // console.log("00000000000000000000000000",str_1);
+                  // // str_1=str_1.replace(/\s+|\n+|\t/g, '\\n*\\s*').replace(/\(/gm,'\\(').replace(/\)/gm,'\\)')
+                  // //  k_re1 = new RegExp(str_1,'gm');
+                  // // str=str.replace(/`${k_re1}`/gm,'');
+                  // console.log("after replace",str);
 
               }
             }

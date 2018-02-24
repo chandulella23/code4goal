@@ -1,6 +1,6 @@
 const express = require('express')
-const port=process.env.PORT || 3000;
 const app = express()
+const port=process.env.PORT || 3000;
 const fs = require('fs')
 const upload1 = require('./start')
 const multer = require('multer')
@@ -55,5 +55,5 @@ app.get('/js',(req,res)=>{
 })
 
 app.listen(port,()=>{
-    console.log('started..! on port')
+    console.log('started..!')
 })
