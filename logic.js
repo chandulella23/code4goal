@@ -1,4 +1,4 @@
-module.exports.logic=function(strongArr,arr,h1Arr,html,data,res){
+module.exports.logic=function(strongArr,arr,h1Arr,html,data){
   console.log("in logic tables");
 
   var textRact=require("./textract.js");

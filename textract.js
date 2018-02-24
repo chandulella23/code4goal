@@ -1,4 +1,4 @@
-module.exports.textRact=function(res){
+module.exports.textRact=function(file,res){
 var textract = require('textract');
 var mammoth=require('mammoth');
 var fs=require('fs');
@@ -8,15 +8,15 @@ var words=require('./words.js')
 
 var textArr=[];
 var dataArr=[];
-textract.fromFileWithPath(__dirname+"/uploads/abc.docx", function( error, text ) {
+textract.fromFileWithPath(__dirname+"/converted/"+file+".docx", function( error, text ) {
 
-  console.log('***************************************************************************')
+  console.log('***************************************************************************',text)
 
   textArr=text.split('.');
   //console.log(textArr.length);
   //console.log("text*****",text.toString())
 
-  mammoth.extractRawText({path: __dirname + "/uploads/abc.docx"})
+  mammoth.extractRawText({path: __dirname + "/converted/"+file+".docx"})
     .then(function(result){
       var data = result.value; // The raw text
       var messages = result.messages;
@@ -149,14 +149,15 @@ textract.fromFileWithPath(__dirname+"/uploads/abc.docx", function( error, text )
           pincodes.pincodes(pincode1);
         }
       }//pincodes end here
-      setTimeout(function(){
+      fs.unlinkSync('./converted/' +file+'.docx')
+       setTimeout(function(){
 
-        res.redirect('/js'); }, 3000);
+         res.send(words); }, 3000);
 
-      })
+       })
 
 
-      .done();
+       .done();
     })
 
 }

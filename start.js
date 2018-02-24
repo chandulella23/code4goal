@@ -12,9 +12,9 @@ var words=require("./words.js")
 
 console.log('::Starts::')
 
-function check(res){
+function check(file,res){
   console.log(" in check function");
-  mammoth.convertToHtml({path: __dirname + "/uploads/abc.docx"})
+  mammoth.convertToHtml({path: __dirname + "/converted/"+file+".docx"})
     .then(function(result){
 
       words.obj.details.name.firstName=null;
@@ -65,8 +65,8 @@ function check(res){
       inputList1.forEach(ShowResults1);
 
       //console.log(h1Arr);
-      logic.logic(strongArr,arr,h1Arr,html,data,res);
-      textRact.textRact(res);
+      logic.logic(strongArr,arr,h1Arr,html,data);
+      textRact.textRact(file,res);
       html=null;
       data=null;
       strongArr=null;

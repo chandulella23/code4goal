@@ -1,59 +1,94 @@
+
 const express = require('express')
+const port=process.env.PORT ||3000;
 const app = express()
-const port=process.env.PORT || 3000;
 const fs = require('fs')
 const upload1 = require('./start')
 const multer = require('multer')
 const words = require('./words')
-cloudconvert = new (require('cloudconvert'))('qbSKGdtOeHuhfn2aS8UmQ4BqI9j3uhlQNNzDwhjs0SE2lz1fkFETAZrZIzuidA7E9fxK9GS3mQUFzChK7s7b1A');
+// var jsonxml = require('jsontoxml');
+const dir = './uploads';
+const converter=require('./converter')
+var path = require('path')
+var i=0;
+var flag=0;
 
+//gZvyWhVAKC-gpeLmPXpad9a3gpOuQYib7HoZpheTyVEFjiVyhHFiUwUVAkWJXdZssTdZVG63I1L44BDV6Da1YQ
 
+const cloudconvert = new (require('cloudconvert'))('J0B3zjoBX93F8fo3M4B7iIh7e5c8IwWt7aaRLJaBIVuPzLzuUZ1LJKoQwS_yA5wM2hopOvveWIZUPSf6nI0kAQ');
 var sampleFile=""
-const storage = multer.diskStorage({
+var moveFile = (file, dir2,new_name,res)=>{
+        //include the fs, path modules
+        var path1 = require('path');
+
+        //gets file name and adds it to dir2
+        var f = path1.basename(file);
+        var dest = path1.resolve(dir2, f);
+
+        fs.rename(file, dest, (err)=>{
+          if(err) throw err;
+          else {console.log('Successfully moved')
+          upload1.check(new_name,res)
+        };
+        });
+      };
+
+let storage = multer.diskStorage({
     destination : (req,file,cb)=>{
-        cb(null,__dirname+'/uploads')
+        cb(null,'uploads/')
     },
-    filename : (req,file,cb)=>{
-        sampleFile = file.originalname
-
-        //cb(null,file.originalname)
-        if(file.mimetype == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
-                cb(null,"abc.docx")
-        }
-        else{
-
-             cb(null,"abc.doc")
-            fs.createReadStream('./uploads/abc.doc') // input file
-            .pipe(cloudconvert.convert({
-            "inputformat": "doc",
-            "outputformat": "docx",
-            "input": "upload"
-        })).pipe(fs.createWriteStream('./uploads/abc.docx')); //output file
-       // cb(null,"abc.docx")
-        }
-        //cb(null,file.filename)
-    }
+    filename: function (request, file, callback) {
+        console.log(file);
+        callback(null, file.originalname)
+      }
 })
+
 const upload = multer({storage})
-app.set('view engine','ejs')
+
+app.use(express.static(__dirname + '/views'));
 
 app.get('/',(req,res)=>{
-    res.render('upload')
+    res.sendFile(path.join(__dirname+'/views/upload.html'));
 })
+
 
 app.post('/',upload.single('sample'),(req,res)=>{
     console.log(req.body,req.file)
-    upload1.check(res);
+    fs.readdir(dir, (err, files) => {
+        // files.forEach(file=>{
+            for(i=0;i<files.length;i++){
+            console.log("file is",files[i]);
+            var new_name="";
+            if(files[i].includes('.pdf')){
+                new_name=files[i].replace('.pdf','')
+                converter.convert(files[i],new_name,'pdf',res)
+                // re.send(words)
+            }
+            else if(files[i].includes('.docx')){
+                new_name=files[i].replace('.docx','')
+                moveFile('./uploads/'+files[i], './converted',new_name,res);
+                // res.send(words)
+                flag++;
+                console.log('in docx')
 
-   // res.send(words)
+            }
+            else{
+                new_name=files[i].replace('.doc','')
+                converter.convert(files[i],new_name,'doc',res)
+                // res.send(words)
+                // fs.unlinkSync(dir+'/'+file)
+                // check(new_name)
 
-
+            }}
+        // })
+      });
+    //   if(flag==0){
+        // setTimeout(()=>res.send(words),15000)
+    //   }
+    //   else{
+    //     setTimeout(()=>res.send(words),0)
+    //   }
 })
-
-app.get('/js',(req,res)=>{
-    res.send(words)
-})
-
 app.listen(port,()=>{
     console.log('started..!')
 })
