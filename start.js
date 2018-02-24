@@ -1,6 +1,6 @@
 var start=new Date();
 console.log(start);
-
+const path= require('path')
 var htmlBeautify = require("html-beautify");
 var DomParser = require('dom-parser');
 var parser = new DomParser();
@@ -14,7 +14,7 @@ console.log('::Starts::')
 
 function check(file,res){
   console.log(" in check function");
-  mammoth.convertToHtml({path: __dirname + "/converted/"+file+".docx"})
+  mammoth.convertToHtml({path: path.join(__dirname , "/converted/"+file+".docx")})
     .then(function(result){
 
       words.obj.details.name.firstName=null;

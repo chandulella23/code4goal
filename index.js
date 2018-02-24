@@ -1,4 +1,4 @@
-
+const path =require('path')
 const express = require('express')
 const port=process.env.PORT ||3000;
 const app = express()
@@ -7,9 +7,8 @@ const upload1 = require('./start')
 const multer = require('multer')
 const words = require('./words')
 // var jsonxml = require('jsontoxml');
-const dir = './uploads';
+const dir = path.join(__dirname,'./uploads');
 const converter=require('./converter')
-var path = require('path')
 var i=0;
 var flag=0;
 
@@ -35,7 +34,7 @@ var moveFile = (file, dir2,new_name,res)=>{
 
 let storage = multer.diskStorage({
     destination : (req,file,cb)=>{
-        cb(null,'uploads/')
+        cb(null,path.join(__dirname,'./uploads/'))
     },
     filename: function (request, file, callback) {
         console.log(file);
@@ -45,7 +44,7 @@ let storage = multer.diskStorage({
 
 const upload = multer({storage})
 
-app.use(express.static(__dirname + '/views'));
+app.use(express.static(path.join(__dirname ,'./views')));
 
 app.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname+'/views/upload.html'));
@@ -66,7 +65,7 @@ app.post('/',upload.single('sample'),(req,res)=>{
             }
             else if(files[i].includes('.docx')){
                 new_name=files[i].replace('.docx','')
-                moveFile('./uploads/'+files[i], './converted',new_name,res);
+                moveFile(path.join(__dirname,'./uploads/'+files[i]), './converted',new_name,res);
                 // res.send(words)
                 flag++;
                 console.log('in docx')

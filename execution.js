@@ -452,6 +452,7 @@ let experience=b[j].join('\n')
 
 // console.log("!!!!!",duration);
 
+  if(duration != null|| duration != undefined){
 
    if((/.*(\-|\–)/img).test(duration.toString())){
    regexDuStart=duration.toString().match(/.*(\-|\–)/img)
@@ -463,6 +464,7 @@ let experience=b[j].join('\n')
   }else{
       obj.endDate=duration;
   }
+}
 
    let keys1 = /(^(\s*<li>)\n*.*(\n*\s*<\/li>)|^(\s*<p>)\n*.*(\n*\s*<\/p>))/gm
    let description=experience.match(keys1)

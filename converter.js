@@ -2,7 +2,7 @@ var fs = require('fs');
 const express=require('express');
 const mammoth = require('mammoth')
 const start=require('./start')
-
+const path = require('path')
 cloudconvert = new (require('cloudconvert'))('OXBzggGenXcbU3fuZRKvxzRtLq0ZqyJkc-prJ5YPoged6TD629Fgl_tO6KwWsKJ9rTpr7CLE5lRuhzXNBlrogg');
 
  function convert(file,new_name,format,res){
@@ -25,7 +25,7 @@ cloudconvert.createProcess({inputformat: format, outputformat: 'docx'}, function
             } else {
 
                 // upload the input file. see https://cloudconvert.com/apidoc#upload
-                conversionProcess.upload(fs.createReadStream('./uploads/'+file), null, function (err, conversionProcess) {
+                conversionProcess.upload(fs.createReadStream(path.join(__dirname,'./uploads/'+file)), null, function (err, conversionProcess) {
 
                     if (err) {
                         console.error('CloudConvert Process upload failed: ' + err);
@@ -33,7 +33,7 @@ cloudconvert.createProcess({inputformat: format, outputformat: 'docx'}, function
                         // wait until the process is finished (or completed with an error)
                         conversionProcess.wait(function (err, conversionProcess) {
                             if (err) {
-                                fs.unlinkSync('./uploads/' + file)
+                                fs.unlinkSync(path.join(__dirname,'./uploads/'+file))
                                 res.redirect('/')
                                 console.error('CloudConvert Process failed: ' + err);
                             } else {
@@ -45,7 +45,7 @@ cloudconvert.createProcess({inputformat: format, outputformat: 'docx'}, function
                                         console.error('CloudConvert Process download failed: ' + err);
                                     } else {
                                         console.log('Downloaded to converted');
-                                        fs.unlinkSync('./uploads/' + file)
+                                        fs.unlinkSync(path.join(__dirname,'./uploads/'+file))
                                         start.check(new_name,res);
                                         // fs.unlinkSync('./converted/' +new_name+'.docx')
                                         // mammoth.convertToHtml({path: __dirname + "/converted1.docx"})

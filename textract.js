@@ -1,3 +1,4 @@
+const path =require('path')
 module.exports.textRact=function(file,res){
 var textract = require('textract');
 var mammoth=require('mammoth');
@@ -8,7 +9,7 @@ var words=require('./words.js')
 
 var textArr=[];
 var dataArr=[];
-textract.fromFileWithPath(__dirname+"/converted/"+file+".docx", function( error, text ) {
+textract.fromFileWithPath(path.join(__dirname,"/converted/"+file+".docx"), function( error, text ) {
 
   console.log('***************************************************************************',text)
 
@@ -16,7 +17,7 @@ textract.fromFileWithPath(__dirname+"/converted/"+file+".docx", function( error,
   //console.log(textArr.length);
   //console.log("text*****",text.toString())
 
-  mammoth.extractRawText({path: __dirname + "/converted/"+file+".docx"})
+  mammoth.extractRawText({path: path.join(__dirname , "/converted/"+file+".docx")})
     .then(function(result){
       var data = result.value; // The raw text
       var messages = result.messages;
