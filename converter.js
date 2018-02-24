@@ -3,7 +3,7 @@ const express=require('express');
 const mammoth = require('mammoth')
 const start=require('./start')
 const path = require('path')
-cloudconvert = new (require('cloudconvert'))('OXBzggGenXcbU3fuZRKvxzRtLq0ZqyJkc-prJ5YPoged6TD629Fgl_tO6KwWsKJ9rTpr7CLE5lRuhzXNBlrogg');
+cloudconvert = new (require('cloudconvert'))('qbSKGdtOeHuhfn2aS8UmQ4BqI9j3uhlQNNzDwhjs0SE2lz1fkFETAZrZIzuidA7E9fxK9GS3mQUFzChK7s7b1A');
 
  function convert(file,new_name,format,res){
      if(format=='doc'||format=='pdf'){
@@ -37,14 +37,14 @@ cloudconvert.createProcess({inputformat: format, outputformat: 'docx'}, function
                                 res.redirect('/')
                                 console.error('CloudConvert Process failed: ' + err);
                             } else {
-                                console.log('Done: ' + conversionProcess.data.message);
+                              //  console.log('Done: ' + conversionProcess.data.message);
 
                                 // download it
                                 conversionProcess.download(fs.createWriteStream("./converted/"+new_name+".docx"), null, function (err, conversionProcess) {
                                     if (err) {
                                         console.error('CloudConvert Process download failed: ' + err);
                                     } else {
-                                        console.log('Downloaded to converted');
+                                      //  console.log('Downloaded to converted');
                                         fs.unlinkSync(path.join(__dirname,'./uploads/'+file))
                                         start.check(new_name,res);
                                         // fs.unlinkSync('./converted/' +new_name+'.docx')

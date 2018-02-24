@@ -26,7 +26,7 @@ var moveFile = (file, dir2,new_name,res)=>{
 
         fs.rename(file, dest, (err)=>{
           if(err) throw err;
-          else {console.log('Successfully moved')
+          else {//console.log('Successfully moved')
           upload1.check(new_name,res)
         };
         });
@@ -37,7 +37,7 @@ let storage = multer.diskStorage({
         cb(null,path.join(__dirname,'./uploads/'))
     },
     filename: function (request, file, callback) {
-        console.log(file);
+        //console.log(file);
         callback(null, file.originalname)
       }
 })
@@ -52,11 +52,11 @@ app.get('/',(req,res)=>{
 
 
 app.post('/',upload.single('sample'),(req,res)=>{
-    console.log(req.body,req.file)
+    //console.log(req.body,req.file)
     fs.readdir(dir, (err, files) => {
         // files.forEach(file=>{
             for(i=0;i<files.length;i++){
-            console.log("file is",files[i]);
+          //  console.log("file is",files[i]);
             var new_name="";
             if(files[i].includes('.pdf')){
                 new_name=files[i].replace('.pdf','')
@@ -68,7 +68,7 @@ app.post('/',upload.single('sample'),(req,res)=>{
                 moveFile(path.join(__dirname,'./uploads/'+files[i]), './converted',new_name,res);
                 // res.send(words)
                 flag++;
-                console.log('in docx')
+              //  console.log('in docx')
 
             }
             else{
