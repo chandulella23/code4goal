@@ -1,12 +1,13 @@
-module.exports.pincodes=function(pincode,text)
+
+module.exports.pincodes=function(pincode,text,data)
 {
       var request = require('request');
       var words1=require('./words.js');
-      //console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",text)
       console.log("0",pincode[0]);
       console.log("1",pincode[1]);
       var up_ad=[],arrStr = [],arrStr1=[],newArr=[],f_addr=[];
       let address="";
+      fs.writeFileSync("fil.txt",data);
 
      for(var j=0;j<pincode.length;j++){
 
@@ -32,11 +33,13 @@ module.exports.pincodes=function(pincode,text)
       }
 
 
+
+
             setTimeout(function(){
-              console.log("new array",newArr,f_addr);
-              if(newArr.length>1) {
-                console.log("started");
+        console.log("new array",newArr,f_addr);
+        console.log("started");
              for(let i=0;i<newArr.length;i++){
+               console.log("!!!!!!!!!!!!!!!!!!!!!");
                 var str=f_addr[i]+" ";
                 var tempStr='';
                 var len = str.length;
@@ -59,21 +62,28 @@ module.exports.pincodes=function(pincode,text)
                  if(arrStr.length>0)
                        for(l=0;l<arrStr.length;l++){
                            m1=arrStr[l];
-                           r=`([^\w*|^\W]|\s|\,)${m1}([^\w*|^\W]|\s|\,)`;
+                        r=`(\\b)${m1}(\\b)`;
                            console.log("array regex ",r);
-                           let keys1 = new RegExp(r, 'g')
+                           let keys1 = new RegExp(r, 'gm')
                            //    console.log("array keys1 ",keys1);
-                       if(keys1.test(text.toString())){
-                           words1.obj.details.address.fullAddress=f_addr[i];
+
+                           var abc=text.match(keys1)
+                           console.log("my abc is",abc);
+                       if(keys1.test(text)){
+                           // words1.obj.details.address.fullAddress=f_addr[i];
                             if(newArr[i]!=null||newArr[i]!=undefined)
                             up_ad=newArr[i].split(' ');
                             up_ad=up_ad.filter((ele)=>{
                               if(ele!=undefined||ele!=''||ele!=null) return ele
                               });
                             console.log("3<",up_ad);
+
+                                  var reg=new RegExp(`.*${up_ad[0]}.*`,"gmi")
+                                  var add=data.match(reg)
                             words1.obj.details.address.pincode=up_ad[0];
                             words1.obj.details.address.locality=up_ad[1];
                             words1.obj.details.address.country=up_ad[up_ad.length-1];
+                            words1.obj.details.address.fullAddress=add;
                             arrStr.length=0;
                             newArr.length=0;
 
@@ -82,21 +92,8 @@ module.exports.pincodes=function(pincode,text)
                 }
 
                 }
-              }
-              else {
-                console.log("welcome 1 pin",f_addr[0]);
-                words1.obj.details.address.fullAddress=f_addr[0];
-                          if(newArr[0]!=null||newArr[0]!=undefined)
-                          up_ad=newArr[0].split(' ');
-                          up_ad=up_ad.filter((ele)=>{
-                            if(ele!=undefined||ele!=''||ele!=null) return ele
-                            });
-                                console.log("1 pin",up_ad);
-                          words1.obj.details.address.pincode=up_ad[0];
-                          words1.obj.details.address.locality=up_ad[1];
-                          words1.obj.details.address.country=up_ad[up_ad.length-1];
 
-                      }
+
           },2500);
 
 

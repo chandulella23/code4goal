@@ -12,6 +12,8 @@ const converter=require('./converter')
 var i=0;
 var flag=0;
 
+console.log=function(){}
+
 //gZvyWhVAKC-gpeLmPXpad9a3gpOuQYib7HoZpheTyVEFjiVyhHFiUwUVAkWJXdZssTdZVG63I1L44BDV6Da1YQ
 // console.log=function(){};
 const cloudconvert = new (require('cloudconvert'))('J0B3zjoBX93F8fo3M4B7iIh7e5c8IwWt7aaRLJaBIVuPzLzuUZ1LJKoQwS_yA5wM2hopOvveWIZUPSf6nI0kAQ');

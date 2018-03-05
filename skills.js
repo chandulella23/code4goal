@@ -64,7 +64,7 @@ module.exports.skill1=function(data,strongArr,h1Arr,update_arr,myName)
 
       if(extraskillFuc==null || extraskillFuc==undefined || extraskillFuc.length==0)
       {
-        let extraskillreg=['qualitative skills','additional skills','areas of expertise','strength','extra'];
+        let extraskillreg=['qualitative skills','additional skills','areas of expertise','strength','extra','achievement'];
         extraskillFuc=search(extraskillreg,innerArray);
         if(extraskillFuc.length>0)
         {

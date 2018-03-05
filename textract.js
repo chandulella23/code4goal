@@ -1,5 +1,5 @@
 const path =require('path')
-module.exports.textRact=function(file,res){
+module.exports.textRact=function(file,res,data1){
 var textract = require('textract');
 var mammoth=require('mammoth');
 var fs=require('fs');
@@ -104,7 +104,7 @@ textract.fromFileWithPath(path.join(__dirname,"/converted/"+file+".docx"), funct
         let count=0;
         for(let i=0;i<2;i++)
         {
-          if(head[i]=="page" || head[i]=="Page" || head[i]=="PAGE"||head[i]=="RESUME"||head[i]=="Resume ")
+          if(head[i]=="page" || head[i]=="Page" || head[i]=="PAGE"||head[i]=="RESUME"||head[i]=="Resume")
           count++;
         }
         if(count==0)
@@ -134,9 +134,9 @@ textract.fromFileWithPath(path.join(__dirname,"/converted/"+file+".docx"), funct
       if(words.obj.details.mobile==null)
       {
 
-        if(/(\(|\+|^\s)*\b(([\+])?([\(]?(\d{1}\-\d{3}|[+]|[+]\d{2}|\d{2,3}|\d{1})?[\)]?)[\-|\s|\.]*?([\(]\d{1}[\)])?[(]?\d{3,4}[)]?[\-|\s|\.]*?\d{3}[\-|\s|\.]*?\d{2}[\-|\s|\.]?\d{1,2})\b/.test(text))
+        if(/((\(|\+|^\s)*\b(([\+])?([\(]?(\d{1}\-\d{3}|[+]|[+]\d{2}|\d{2,3}|\d{1})?[\)]?)[\-|\s|\.]*?([\(]\d{1}[\)])?[(]?\d{3,4}[)]?[\-|\s|\.]*?\d{3}[\-|\s|\.]*?\d{2}[\-|\s|\.]?\d{1,2})\b|(\(|\+|^\s)*\b(([\+])?([\(]?(\d{1}\-\d{3}|[+]|[+]\d{2}|\d{2,3}|\d{1})?[\)]?)[\-|\s|\.]*?[\(]?\d{5}[\)]?[\-|\s|\.]*\d{5})\b)/.test(text))
         {
-        var phone=text.toString().match(/(\(|\+|^\s)*\b(([\+])?([\(]?(\d{1}\-\d{3}|[+]|[+]\d{2}|\d{2,3}|\d{1})?[\)]?)[\-|\s|\.]*?([\(]\d{1}[\)])?[(]?\d{3,4}[)]?[\-|\s|\.]*?\d{3}[\-|\s|\.]*?\d{2}[\-|\s|\.]?\d{1,2})\b/gm);
+        var phone=text.toString().match(/((\(|\+|^\s)*\b(([\+])?([\(]?(\d{1}\-\d{3}|[+]|[+]\d{2}|\d{2,3}|\d{1})?[\)]?)[\-|\s|\.]*?([\(]\d{1}[\)])?[(]?\d{3,4}[)]?[\-|\s|\.]*?\d{3}[\-|\s|\.]*?\d{2}[\-|\s|\.]?\d{1,2})\b|(\(|\+|^\s)*\b(([\+])?([\(]?(\d{1}\-\d{3}|[+]|[+]\d{2}|\d{2,3}|\d{1})?[\)]?)[\-|\s|\.]*?[\(]?\d{5}[\)]?[\-|\s|\.]*\d{5})\b)/gm);
         console.log("phone id is :",phone[0]);
         words.obj.details.mobile=phone[0]
         }
@@ -156,7 +156,7 @@ textract.fromFileWithPath(path.join(__dirname,"/converted/"+file+".docx"), funct
            {
              // var pincode1=pincode[0];
              //console.log("pincode",pincode1)
-          pincodes.pincodes(pincode,text);
+          pincodes.pincodes(pincode,text,data1);
            }
        }
 
