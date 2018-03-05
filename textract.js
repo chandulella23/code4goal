@@ -147,21 +147,18 @@ textract.fromFileWithPath(path.join(__dirname,"/converted/"+file+".docx"), funct
 
       //pincode starts here
       let text1=text + " "
-       if(/[^\d]\d{5,6}[^a-z|[^@|^\d]/g.test(text1.toString())){
-            let pincodereg=text1.toString().match(/[^\d]\d{5,6}[^a-z|[^@|^\d]/g)
-           var pincode=pincodereg.toString().match(/\d{5,6}/gm)
-            console.log("pincode:",pincode)
-          }
 
-
-     if(pincode!=null && pincode!= undefined && pincode.length>0)
-       {
-         // var pincode1=pincode[0];
-         //console.log("pincode",pincode1)
-      // pincodes.pincodes(pincode,text);
+    if(/[^\d]\d{5,6}[^a-z|[^@|^\d]/g.test(text1.toString())){
+         let pincodereg=text1.toString().match(/[^\d]\d{5,6}[^a-z|[^@|^\d]/g)
+        var pincode=pincodereg.toString().match(/\d{5,6}/gm)
+         console.log("pincode:",pincode)
+         if(pincode!=null && pincode!= undefined && pincode.length>0)
+           {
+             // var pincode1=pincode[0];
+             //console.log("pincode",pincode1)
+          pincodes.pincodes(pincode,text);
+           }
        }
-
-
 
         //pincodes end here
       fs.unlinkSync('./converted/' +file+'.docx')
